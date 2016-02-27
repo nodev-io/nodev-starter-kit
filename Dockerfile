@@ -1,17 +1,17 @@
-# pytest-nodev container
+# nodev container
 #
 # 1. Fill the requirements.txt file.
 # 2. Create your nodev docker image once with:
 #   docker build -t nodev .
 # 3. Run the tests with:
-#   docker run --rm -it -v `pwd`:/home/pytest nodev
+#   docker run --rm -it -v `pwd`:/src nodev
 #
 FROM python:3
 
 # setup pytest user
 RUN adduser --disabled-password --gecos "" --uid 7357 pytest
-COPY ./ /home/pytest
-WORKDIR /home/pytest
+COPY ./ /src
+WORKDIR /src
 
 # setup the python and pytest environments
 ENV PYTEST_NODEV_MODE=FEARLESS
