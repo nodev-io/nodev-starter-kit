@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 
+import pytest
 
-def test_rfc3986_parse_basic(wish):
-    rfc3986_parse = wish
+@pytest.mark.candidate('rfc3986_parse')
+def test_rfc3986_parse_basic():
     object_ = rfc3986_parse('postgresql://user@example.com:8080/example/path?param=value')
     tokens = list(object_)
     assert 'postgresql' in tokens
     assert '/example/path' in tokens
 
 
-def test_rfc3986_parse_full(wish):
-    rfc3986_parse = wish
+@pytest.mark.candidate('rfc3986_parse')
+def test_rfc3986_parse_full():
     object_ = rfc3986_parse('postgresql://user@example.com:8080/example/path?param=value')
     tokens = list(object_)
     assert 'postgresql' in tokens

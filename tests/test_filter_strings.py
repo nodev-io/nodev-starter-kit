@@ -1,6 +1,8 @@
 
-def test_filter_strings_basic(wish):
-    filter_strings = wish
+import pytest
+
+@pytest.mark.candidate('filter_strings')
+def test_filter_strings_basic():
     input = ['has MARK', 'does not have']
     expected_ouput = ['has MARK']
     accept_pattern = '.*MARK.*'
