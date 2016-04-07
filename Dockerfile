@@ -1,27 +1,27 @@
 # nodev container
 #
-# 1. Fill the requirements.txt file.
-# 2. Create your nodev docker image once with:
+# Fill the requirements.txt file.
+# Build the docker image once with:
 #   docker build -t nodev .
-# 3. Run the tests with:
-#   docker run --rm -it -v `pwd`:/src nodev
+# Run the tests with:
+#   docker run --rm -it -v `pwd`:/src nodev [PYTEST_OPTIONS]
 #
 FROM python:3
 
-# setup pytest user
-RUN adduser --disabled-password --gecos "" --uid 7357 pytest
+# setup workdir
 COPY ./ /src
 WORKDIR /src
 
 # setup the python and pytest environments
+RUN pip install --upgrade pip setuptools pytest-nodev
+RUN pip install --upgrade -r requirements-base.txt
+RUN pip install --upgrade -r requirements.txt
 ENV PYTEST_NODEV_MODE=FEARLESS
-RUN pip install --upgrade pip setuptools pytest-nodev -r requirements.txt
 
-# fix up broken stdlib-list permissions, see:
-#   https://github.com/jackmaney/python-stdlib-list/issues/2
-RUN chmod go+r -R /usr/local/lib/python3.5/site-packages/stdlib*
+# setup pytest user
+RUN adduser --disabled-password --gecos "" --uid 7357 pytest
+USER pytest
 
 # setup entry point
-USER pytest
 ENTRYPOINT ["py.test"]
-CMD ["--wish-from-all"]
+CMD ["--candidates-from-all"]

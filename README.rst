@@ -1,4 +1,4 @@
-nodev-tutorial
-==============
+nodev-starter-kit
+=================
 
-Tutorial on nodev test-driven code search.
+Starter-kit for nodev test-driven source code search.
