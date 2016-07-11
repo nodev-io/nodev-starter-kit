@@ -29,4 +29,4 @@ Set the DOCKER_HOST environment variable::
 
 Run the tests with::
 
-    python nodev.py [PYTEST_OPTIONS]
+    python docker-nodev.py [PYTEST_OPTIONS]
