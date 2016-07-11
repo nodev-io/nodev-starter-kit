@@ -19,13 +19,13 @@ Run the tests with::
 Remote access to a docker server
 --------------------------------
 
-Install the docker client.
-	
-	apt install docker.io
+Install the docker client::
 
-Set the DOCKER_HOST environment variable.
+    apt install docker.io
 
-	export DOCKER_HOST="tcp://xxx.xxx.xxx.xxx:4243"
+Set the DOCKER_HOST environment variable::
+
+    export DOCKER_HOST="tcp://xxx.xxx.xxx.xxx:4243"
 
 Run the tests with::
 
