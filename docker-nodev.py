@@ -11,7 +11,7 @@ DOCKER_SIMPLE_CMD_IN = 'docker {} {container_id}'
 
 def nodev(argv=()):
     container_id = subprocess.check_output(DOCKER_CREATE_IN.format(' '.join(argv)), shell=True).decode('utf-8').strip()
-    print('creating container: {container_id}'.format(**locals()))
+    print('created container: {container_id}'.format(**locals()))
     try:
         subprocess.check_call('docker cp . {container_id}:/src '.format(**locals()), shell=True)
         subprocess.check_call('docker start -ai {container_id}'.format(**locals()), shell=True)
@@ -23,6 +23,6 @@ def nodev(argv=()):
 if __name__ == '__main__':
     try:
         nodev(sys.argv)
-    except subprocess.CalledProcessError as ex:
+    except (subprocess.CalledProcessError, KeyboardInterrupt) as ex:
         print(ex.args)
         sys.exit(1)
