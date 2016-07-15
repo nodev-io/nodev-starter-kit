@@ -47,7 +47,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'nodev tutorial'
+project = u'nodev starter kit'
 copyright = u'2016, Alessandro Amici'
 author = u'Alessandro Amici'
 
