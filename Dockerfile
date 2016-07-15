@@ -19,7 +19,7 @@ WORKDIR /src
 # setup the python and pytest environments
 RUN pip install --upgrade pip setuptools pytest-nodev
 # several packages need NumPy during setup, install it unconditionally
-RUN pip install --upgrade numpy
+# RUN pip install --upgrade numpy
 RUN pip install --upgrade -r requirements.txt
 ENV PYTEST_NODEV_MODE=FEARLESS
 
