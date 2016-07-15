@@ -1,7 +1,7 @@
 
-==============
-nodev tutorial
-==============
+================
+nodev staret kit
+================
 
 :Version: |release|
 :Date: |today|
@@ -12,4 +12,6 @@ nodev tutorial
     :maxdepth: 2
     :caption: Table of Contents
 
+    introduction
+    concepts
     specification-tests
