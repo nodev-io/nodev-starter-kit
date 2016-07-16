@@ -2,6 +2,41 @@
 Specification Tests
 ===================
 
+    "If it's not tested, it's broken." - Bruce Eckel.
+
+Testing assure you that the code works... at least in one very specific case.
+
+
+Why do we love unit tests?
+--------------------------
+
+We love unit tests because they...
+
+- help writing better code in the first place
+- make refactoring possible
+- keep internal API tidy
+- help design and document the intended behaviour of the code
+
+
+Why do we hate unit tests?
+--------------------------
+
+We hate unit tests because they...
+
+- need as much work as code
+- need to be refactored during a refactoring
+- break when you change trivial implementation details
+- risk keeping the focus on the process, not on the product
+
+Feature vs. implementation
+--------------------------
+
+
+
+How to test for a feature without knowing the implementation?
+-------------------------------------------------------------
+
+
 Examples
 --------
 

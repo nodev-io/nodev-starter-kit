@@ -12,6 +12,6 @@ nodev staret kit
     :maxdepth: 2
     :caption: Table of Contents
 
-    introduction
     concepts
+    quickstart
     specification-tests

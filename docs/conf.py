@@ -17,6 +17,17 @@
 # import os
 import sphinx_rtd_theme
 
+# "monkey patch" sphinx to omit any warnings of 'nonlocal image URI found'.
+# Now we can `sphinx-build -W` to turn "warnings to errors" in test builds.
+import sphinx.environment
+from docutils.utils import get_source_line
+
+def _warn_node(self, msg, node, **kwargs):
+    if not msg.startswith('nonlocal image URI found:'):
+        self._warnfunc(msg, '%s:%s' % get_source_line(node), **kwargs)
+
+sphinx.environment.BuildEnvironment.warn_node = _warn_node
+
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
