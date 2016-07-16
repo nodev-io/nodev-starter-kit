@@ -30,7 +30,7 @@ e.g. as a dedicated user or even better inside a dedicated container.
 **But isn't it docker overkill? Can't I just use a dedicated user to run pytest-nodev?**
 
 We tried hard to find a simpler setup, but once all the nitty-gritty details are factored in
-we choosed docker as the best trade-off between safety, reproducibility and easiness of use.
+we choose docker as the best trade-off between safety, reproducibility and easiness of use.
 
 
 Local docker setup
