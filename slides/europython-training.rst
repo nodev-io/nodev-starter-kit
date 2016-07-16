@@ -54,8 +54,8 @@ Training outline 2/2
 - Show an example and make exercises
 - Present the *unit tests validation* best practice
 - Show an example and make exercises
+- Limitations and future work
 - Conclusions
-- Q&A
 
 ----
 
@@ -188,20 +188,19 @@ nodev-starte-kit lets you perform test-driven code search queries
 with `pytest-nodev <https://pypi.python.org/pypi/pytest-nodev>`_
 safely and efficiently using `docker <https://docker.com>`_.
 
-- go to::
+Go to::
 
     https://github.com/nodev-io/nodev-starter-kit
 
-- fork the repo on GitHub
-- git clone your fork::
+fork the repo on GitHub and git clone your fork::
 
     git clone https://github.com/$USER/nodev-starter-kit
 
 
 ----
 
-Quickstart 1/2
---------------
+FAQ 1/2
+-------
 
 **Why do I need special care to run pytest-nodev?**
 
@@ -215,11 +214,53 @@ e.g. as a dedicated user or even better inside a dedicated container.
 
 ----
 
-Quickstart 2/2
---------------
+FAQ 2/2
+-------
 
 **But isn't it docker overkill? Can't I just use a dedicated user to run pytest-nodev?**
 
 We tried hard to find a simpler setup, but once all the nitty-gritty details are factored in
 we choose docker as the best trade-off between safety, reproducibility and easiness of use.
 
+----
+
+
+
+----
+
+Limitations and future work
+---------------------------
+
+- Improve performance!
+- Extend implementation independence
+
+  - Permutate arguments, handle keyword arguments...
+
+- Improve performance!
+- Extend available code
+
+  - Collect code from all repos, extract snippets...
+
+- Improve performance!
+- **Setup a web search engine!**
+
+----
+
+Conclusions
+-----------
+
+*Test-driven code search* tends to find *great code*,
+code that provides features without polluting them with useless implementation details.
+
+As long as you learn to write *great tests*,
+tests that specify a feature without insisting on useless implementation details.
+
+
+----
+
+Thanks!
+-------
+
+Alessandro Amici - @alexamici
+
+B-Open Solutions - http://bopen.eu

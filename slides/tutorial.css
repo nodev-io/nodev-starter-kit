@@ -1,0 +1,53 @@
+@import url(http://fonts.googleapis.com/css?family=Bitter|Oxygen:400,700);
+
+body {
+    font-size: 180%;
+    text-align: center;
+    font-family: Oxygen, sans-serif;
+}
+
+p {
+    font-weight: normal;
+    margin-bottom: 0.3em;
+    margin-top: 0.3em;
+    text-align: left;
+    line-height: 140%;
+}
+
+pre {
+    text-align: left;
+    padding-left: 2em;
+}
+
+h1, h2, h3, h4 {
+    font-family: Bitter, serif;
+    font-weight: normal;
+    margin-bottom: 0.3em;
+    margin-top: 0.3em;
+}
+
+tt {
+    font-size: 125;
+}
+
+ul {
+    list-style-position: inside;
+}
+
+li {
+    font-family: Oxygen;
+    font-weight: normal;
+    margin-bottom: 0.3em;
+    margin-top: 0.3em;
+    padding-left: 0.3em;
+    text-align: left;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.hidden {
+    display: none;
+}
