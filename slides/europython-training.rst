@@ -41,17 +41,17 @@ Training outline 1/2
 - Present and install **pytest-nodev** and **nodev-stater-kit**
 - Make our first *test-driven code search*
 - Practice *pytest-nodev* search options
-- Present the *feature specification tests* concepts
-- Present and install **nodev.specs**
-- Practice the art of writing *implementation-agnostic* test
+- Present the *test-driven reuse* development strategy
+- Show an example and make exercises
 
 ----
 
 Training outline 2/2
 --------------------
 
-- Present the *test-driven reuse* development strategy
-- Show an example and make exercises
+- Present the *feature specification tests* concepts
+- Present and install **nodev.specs**
+- Practice the art of writing *implementation-agnostic* test
 - Present the *unit tests validation* best practice
 - Show an example and make exercises
 - Limitations and future work
@@ -272,7 +272,7 @@ Test with::
 
 ----
 
-Our first search 1/4
+Our first search 1/5
 --------------------
 
 We need to write a ``parse_bool`` function that robustly parses a boolean value from a string.
@@ -291,7 +291,7 @@ Here is the test we intend to use to validate our own implementation once we wri
 
 ----
 
-Our first search 2/4
+Our first search 2/5
 --------------------
 
 We copy our specification test to the ``tests/test_parse_bool.py`` file and
@@ -315,7 +315,7 @@ decorate it with ``pytest.mark.candidate`` as follows:
 
 :id: first-search-3
 
-Our first search 3/4
+Our first search 3/5
 --------------------
 
 And we instruct our search engine to run our test on all candidate callables in the Python standard library::
@@ -342,7 +342,7 @@ is the only candidate that passes our test.
 
 ----
 
-Our first search 4/4
+Our first search 4/5
 --------------------
 
 ``distutils.util:strtobool``
@@ -359,8 +359,106 @@ Convert a string representation of truth to true (1) or false (0).
         else:
             raise ValueError("invalid truth value %r" % (val,))
 
-
 https://github.com/python/cpython/blob/3.5/Lib/distutils/util.py#L304
+
+----
+
+Our first search 5/5
+--------------------
+
+**Wow! Does it work so well all the times?**
+
+Honestly no! But it's the perfect example of the benefits of *test-driven code search*
+
+- a function imported is a one less function coded---and tested, documented, debugged,
+  ported, maintained...
+- it's battle tested code---lot's of old bugs have already been squashed
+- it's other people code---there's an upstream to report new bugs to
+- it gives you additional useful functionality---for free on top of that
+- it's in the Python standard library---no additional dependency required
+
+----
+
+Practice pytest-nodev
+---------------------
+
+- practice command line options
+
+  - collection options
+  - includes and excludes
+  - explicit fail to debug
+
+- work around crashes
+- find more ``parse_bool`` implementations
+
+  - ``numpy.distutils.fcompiler:str2bool``
+  - ``click.types:BOOL``
+
+----
+
+Test-driven code reuse 1/2
+--------------------------
+
+*Test-driven reuse* (TDR) is an extension of the well known *test-driven development* (TDD)
+development practice.
+
+Developing a new feature in TDR starts with the developer writing the tests
+that will validate the correct implementation of the desired functionality.
+
+Before writing any functional code the tests are run against all functions
+and classes of all available projects.
+
+Any code passing the tests is presented to the developer
+as a candidate implementation for the target feature.
+
+----
+
+Test-driven code reuse 2/2
+--------------------------
+
+- if nothing passes the tests the developer need to implement the feature and TDR reduces to TDD
+- if any code passes the tests the developer can:
+
+  - **import**: accept code as a dependency and use the class / function directly
+  - **fork**: copy the code and the related tests into their project
+  - **study**: use the code and the related tests as guidelines for their implementation,
+    in particular identifyng corner cases and optimizations
+
+----
+
+Practice TDR 1/2
+----------------
+
+Search (or implement) a ``parse_datetime`` function returning
+the correct ``datetime:datetime`` object
+from the following ISO 8601 strings:
+
+.. code:: python
+
+    '2015-06-30T23:59:59'
+    '2015-06-30T23:59:59Z'
+    '2015-06-30T22:59:59-01:00'
+    '2015-06-30T23:59:59.623431'
+    '2015-06-30T23:59:59.623431Z'
+    '2015-06-30T22:59:59.623431-01:00'
+
+----
+
+Practice TDR 2/2
+----------------
+
+Search (or implement) a ``parse_datetime`` function returning
+the correct UTC calendar tuple, e.g. ``(2015, 6, 30, 23, 59, 60.623431)``,
+from the following ISO 8601 strings:
+
+.. code:: python
+
+    '2015-06-30T23:59:60'
+    '2015-06-30T23:59:60Z'
+    '2015-06-30T22:59:60-01:00'
+    '2015-06-30T23:59:60.623431'
+    '2015-06-30T23:59:60.623431Z'
+    '2015-06-30T22:59:60.623431-01:00'
 
 ----
 

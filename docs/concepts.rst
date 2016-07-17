@@ -51,22 +51,28 @@ with a generic signature.
 Test-driven code reuse
 ----------------------
 
-consequently a software development strategy called
-*test-driven reuse* or TDR that we also call *nodev*.
-TDR is an extension of the well known *test-driven development* or TDD,
+*Test-driven reuse* (TDR) is an extension of the well known *test-driven development* (TDD)
+development practice.
 
 Developing a new feature in TDR starts with the developer writing the tests
-that will validate candidate implementations of the desired functionality.
+that will validate the correct implementation of the desired functionality.
+
 Before writing any functional code the tests are run against all functions
 and classes of all available projects.
-Any code passing the tests is presented to the developer
-as a candidate implementation for the target feature.
 
-once the developer has written the tests that define the behaviour of a new
-function to a degree sufficient to validate the implementation they are going to write
-it is good enough to validate
-any implementation. Running the tests on a large set of functions may result in a *PASSED*, that is
-a function that already implements their feature.
+Any code passing the tests is presented to the developer
+as a candidate implementation for the target feature:
+
+
+- if nothing passes the tests the developer need to implement the feature and TDR reduces to TDD
+- if any code passes the tests the developer can:
+
+  - **import**: accept code as a dependency and use the class / function directly
+  - **fork**: copy the code and the related tests into their project
+  - **study**: use the code and the related tests as guidelines for their implementation,
+    in particular identifyng corner cases and optimizations
+
+
 
 
 Unit tests validation
