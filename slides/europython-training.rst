@@ -6,6 +6,7 @@
 
 .. title:: Test-driven code search and the art of writing implementation-agnostic tests
 
+
 ----
 
 Test-driven code search and the art of writing implementation-agnostic tests
@@ -188,14 +189,13 @@ nodev-starte-kit lets you perform test-driven code search queries
 with `pytest-nodev <https://pypi.python.org/pypi/pytest-nodev>`_
 safely and efficiently using `docker <https://docker.com>`_.
 
-Go to::
+To install *nodev-starter-kit* clone the `official repo <https://github.com/nodev-io/nodev-startet-kit>`_::
 
-    https://github.com/nodev-io/nodev-starter-kit
+    $ git clone https://github.com/nodev-io/nodev-starter-kit.git
+    $ cd nodev-starter-kit
 
-fork the repo on GitHub and git clone your fork::
-
-    $ git clone https://github.com/$USER/nodev-starter-kit
-
+Advanced GitHub users are suggested to
+`fork the offical repo <https://help.github.com/articles/fork-a-repo/>`_ and clone their fork.
 
 ----
 
@@ -278,7 +278,7 @@ Our first search 1/5
 We need to write a ``parse_bool`` function that robustly parses a boolean value from a string.
 Here is the test we intend to use to validate our own implementation once we write it:
 
-.. code:: python
+.. code-block:: python
 
     def test_parse_bool():
         assert not parse_bool('false')
@@ -297,7 +297,7 @@ Our first search 2/5
 We copy our specification test to the ``tests/test_parse_bool.py`` file and
 decorate it with ``pytest.mark.candidate`` as follows:
 
-.. code:: python
+.. code-block:: python
 
     import pytest
 
@@ -348,7 +348,7 @@ Our first search 4/5
 ``distutils.util:strtobool``
 Convert a string representation of truth to true (1) or false (0).
 
-.. code:: python
+.. code-block:: python
 
     def strtobool (val):
         val = val.lower()
@@ -401,12 +401,12 @@ Practice pytest-nodev 2/2
 
 *Search results* classes and how to improve a *search query*:
 
-- **one or more relevant results**: your *search query* is just perfect
+- **only relevant results**: your *search query* is just perfect
 - **no result at all**: your *search query* may be too strict
 
   - try relaxing your *feature specification tests*,
     e.g. drop corner cases or try to focus on a reduced / partial feature
-  - try collecting candidates from a larger corpus of code
+  - try collecting more candidates from more code
 
 - **no relevant result**: your *feature specification tests* is too weak
 
@@ -453,7 +453,7 @@ Search (or implement) a ``parse_datetime`` function returning
 the correct ``datetime:datetime`` object or UTC calendar tuple e.g. ``(2015, 6, 30, 23, 59, 59.623431)``
 from the following ISO 8601 strings:
 
-.. code:: python
+.. code-block:: python
 
     '2015-06-30T23:59:59'
     '2015-06-30T23:59:59Z'
@@ -471,7 +471,7 @@ Search (or implement) a ``parse_datetime`` function returning
 the correct UTC calendar tuple, e.g. ``(2015, 6, 30, 23, 59, 60.623431)``,
 from the following ISO 8601 strings:
 
-.. code:: python
+.. code-block:: python
 
     '2015-06-30T23:59:60'
     '2015-06-30T23:59:60Z'
@@ -509,6 +509,16 @@ Assert the desired behaviour
   - define the simplest input / output specification using base-types wherever possible
     (``float``, ``Tuple[int, int]``, but also ``numpy.ndarray``)
 
+----
+
+Keep clear from implementation details
+--------------------------------------
+
+- target the simpler implementation
+- abuse the insanely powerful ``in`` operator
+- abuse python insanely powerful introspection
+- exploit coercion rules
+- use and write helpers
 
 ----
 

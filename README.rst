@@ -13,7 +13,7 @@
 
 .. NOTE: only the first couple of lines of the README are shown on GitHub mobile
 
-nodev-starte-kit lets you perform test-driven code search queries
+nodev-starter-kit lets you perform test-driven code search queries
 with `pytest-nodev <https://pypi.python.org/pypi/pytest-nodev>`_
 safely and efficiently using `docker <https://docker.com>`_.
 
@@ -31,6 +31,17 @@ e.g. as a dedicated user or even better inside a dedicated container.
 
 We tried hard to find a simpler setup, but once all the nitty-gritty details are factored in
 we choose docker as the best trade-off between safety, reproducibility and easiness of use.
+
+Install nodev-starter-kit
+-------------------------
+
+To install *nodev-starter-kit* clone the `official repo <https://github.com/nodev-io/nodev-startet-kit>`_::
+
+    $ git clone https://github.com/nodev-io/nodev-starter-kit.git
+    $ cd nodev-starter-kit
+
+Advanced GitHub users are suggested to
+`fork the offical repo <https://help.github.com/articles/fork-a-repo/>`_ and clone their fork.
 
 
 Install docker-engine and docker
@@ -50,7 +61,9 @@ Only on Ubuntu 16.04 you can use the script we provide::
 
 And test your setup with::
 
-    $ sudo docker info
+    $ docker info
+
+Refer to the official Docker documentation for trouble-shooting and additional configurations.
 
 
 Create the nodev image
@@ -64,7 +77,7 @@ With an editor fill the requirements.txt file with the packages to be installed 
 
 Build the docker image with::
 
-    $ sudo docker build -t nodev .
+    $ docker build -t nodev .
 
 
 Execute a search
@@ -72,12 +85,12 @@ Execute a search
 
 Run the search engine container on a local docker-engine server, e.g. with::
 
-    $ sudo docker run --rm -it -v `pwd`:/src nodev --candidates-from-stdlib tests/test_parse_bool.py
+    $ docker run --rm -it -v `pwd`:/src nodev --candidates-from-stdlib tests/test_parse_bool.py
 
 Or alternatively after having set the ``DOCKER_HOST`` environment variable, e.g. with::
 
     $ export DOCKER_HOST='tcp://127.0.0.1:4243'  # change '127.0.0.1:4243' with the IP address and port
-                                                 # of your remote docker-engine host
+                                                 # of your docker-engine host
 
 you can run the search engine container on a remote docker-engine server, e.g. with::
 
