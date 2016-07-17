@@ -38,7 +38,7 @@ Training outline 1/2
 --------------------
 
 - Present the *test-driven code search* concepts
-- Present and install **pytest-nodev** and **nodev-stater-kit**
+- Present **pytest-nodev** and install **nodev-stater-kit**
 - Make our first *test-driven code search*
 - Practice *pytest-nodev* search options
 - Present the *test-driven reuse* development strategy
@@ -379,8 +379,8 @@ Honestly no! But it's the perfect example of the benefits of *test-driven code s
 
 ----
 
-Practice pytest-nodev
----------------------
+Practice pytest-nodev 1/2
+-------------------------
 
 - practice command line options
 
@@ -393,6 +393,26 @@ Practice pytest-nodev
 
   - ``numpy.distutils.fcompiler:str2bool``
   - ``click.types:BOOL``
+
+----
+
+Practice pytest-nodev 2/2
+-------------------------
+
+*Search results* classes and how to improve a *search query*:
+
+- **one or more relevant results**: your *search query* is just perfect
+- **no result at all**: your *search query* may be too strict
+
+  - try relaxing your *feature specification tests*,
+    e.g. drop corner cases or try to focus on a reduced / partial feature
+  - try collecting candidates from a larger corpus of code
+
+- **no relevant result**: your *feature specification tests* is too weak
+
+  - harden your *feature specification tests*, e.g. add more normal cases, add more corner cases
+
+Defeat is when you only seem to go from *no result at all* to *no relevant result* and back.
 
 ----
 
@@ -430,7 +450,7 @@ Practice TDR 1/2
 ----------------
 
 Search (or implement) a ``parse_datetime`` function returning
-the correct ``datetime:datetime`` object
+the correct ``datetime:datetime`` object or UTC calendar tuple e.g. ``(2015, 6, 30, 23, 59, 59.623431)``
 from the following ISO 8601 strings:
 
 .. code:: python
@@ -459,6 +479,36 @@ from the following ISO 8601 strings:
     '2015-06-30T23:59:60.623431'
     '2015-06-30T23:59:60.623431Z'
     '2015-06-30T22:59:60.623431-01:00'
+
+----
+
+Coffee break
+------------
+
+----
+
+Feature specification tests
+---------------------------
+
+Similarly to *keyword-based search* also in *test-driven code search*
+the quality of the *search results* depends strongly from
+the ability to build a strong *search query*,
+in particular from the way our *feature specification tests* are written.
+
+Writing effective *feature specification tests* is an art.
+
+----
+
+Assert the desired behaviour
+----------------------------
+
+- try to identify the feature at the bare level
+- try to identify the cleanest possible interface
+
+  - choose between a function and a class
+  - define the simplest input / output specification using base-types wherever possible
+    (``float``, ``Tuple[int, int]``, but also ``numpy.ndarray``)
+
 
 ----
 

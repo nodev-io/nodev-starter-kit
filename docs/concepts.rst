@@ -73,8 +73,6 @@ as a candidate implementation for the target feature:
     in particular identifyng corner cases and optimizations
 
 
-
-
 Unit tests validation
 ---------------------
 
@@ -82,6 +80,17 @@ An independent use case for test-driven code search is unit tests validation.
 If a test passes with an unexpected object there are two possibilities,
 either the test is not strict enough and allows for false positives and needs to be updated,
 or the *PASSED* is actually a function you could use instead of your implementation.
+
+
+Feature specification tests
+---------------------------
+
+Similarly to *keyword-based search* also in *test-driven code search*
+the quality of the *search results* depends strongly from
+the ability to build a strong *search query*,
+in particular from the way our *feature specification tests* are written.
+
+Writing effective *feature specification tests* is an art.
 
 
 Bibliography
