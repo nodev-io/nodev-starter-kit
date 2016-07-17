@@ -6,6 +6,10 @@ body {
     font-family: Oxygen, sans-serif;
 }
 
+#first-search-3.step {
+    width: 1024px;
+}
+
 p {
     font-weight: normal;
     margin-bottom: 0.3em;

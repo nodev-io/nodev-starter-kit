@@ -194,7 +194,7 @@ Go to::
 
 fork the repo on GitHub and git clone your fork::
 
-    git clone https://github.com/$USER/nodev-starter-kit
+    $ git clone https://github.com/$USER/nodev-starter-kit
 
 
 ----
@@ -224,7 +224,143 @@ we choose docker as the best trade-off between safety, reproducibility and easin
 
 ----
 
+Install docker-engine and docker
+--------------------------------
 
+In order to run pytest-nodev you need to access a docker-engine server via the docker client,
+if you don't have Docker already setup
+you need to follow the official installation instructions for your platform:
+
+- `Docker for Linux <https://docs.docker.com/engine/installation/linux/>`_
+- `Docker for MacOS <https://docs.docker.com/docker-for-mac/>`_
+- `Docker for Windows <https://docs.docker.com/docker-for-windows/>`_
+
+**YOU DON'T NEED TO INSTALL THE DOCKER-ENGINE SERVER FOR THE TRAINING!**
+
+----
+
+Create the nodev image
+----------------------
+
+The *nodev* docker image will be your search engine,
+it needs to be created once and updated every time you want to
+change the packages installed in the search engine environment.
+
+With an editor fill the requirements.txt file with the packages to be installed in the search engine.
+
+Build the docker image with::
+
+    $ docker build -t nodev .
+
+**YOU DON'T NEED TO CREATE THE NODEV IMAGE FOR THE TRAINING!**
+
+----
+
+Setup the docker client
+-----------------------
+
+Set the ``DOCKER_HOST`` environment variable to the training docker-engine server on AWS::
+
+    $ export DOCKER_HOST="tcp://23.23.23.23:4243"
+
+Test with::
+
+    $ docker images
+    REPOSITORY  TAG     IMAGE ID      CREATED         SIZE
+    nodev       latest  26ee171c2744  18 minutes ago  802.4 MB
+    [...]
+
+----
+
+Our first search 1/4
+--------------------
+
+We need to write a ``parse_bool`` function that robustly parses a boolean value from a string.
+Here is the test we intend to use to validate our own implementation once we write it:
+
+.. code:: python
+
+    def test_parse_bool():
+        assert not parse_bool('false')
+        assert not parse_bool('FALSE')
+        assert not parse_bool('0')
+
+        assert parse_bool('true')
+        assert parse_bool('TRUE')
+        assert parse_bool('1')
+
+----
+
+Our first search 2/4
+--------------------
+
+We copy our specification test to the ``tests/test_parse_bool.py`` file and
+decorate it with ``pytest.mark.candidate`` as follows:
+
+.. code:: python
+
+    import pytest
+
+    @pytest.mark.candidate('parse_bool')
+    def test_parse_bool():
+        assert not parse_bool('false')
+        assert not parse_bool('FALSE')
+        assert not parse_bool('0')
+
+        assert parse_bool('true')
+        assert parse_bool('TRUE')
+        assert parse_bool('1')
+
+----
+
+:id: first-search-3
+
+Our first search 3/4
+--------------------
+
+And we instruct our search engine to run our test on all candidate callables in the Python standard library::
+
+    $ python docker-nodev.py --candidates-from-stdlib tests/test_parse_bool.py
+    ======================= test session starts ==========================
+    [...]
+    collected 4000 items
+
+    test_parse_bool.py xxxxxxxxxxxx[...]xxxxxxxxXxxxxxxxx[...]xxxxxxxxxxxx
+
+    ====================== pytest_nodev: 1 passed ========================
+
+    test_parse_bool.py::test_parse_bool[distutils.util:strtobool] PASSED
+
+    === 3999 xfailed, 1 xpassed, 260 pytest-warnings in 75.38 seconds ====
+
+In just over a minute pytest-nodev collected 4000 functions from the standard library,
+run your specification test on all of them and
+reported that the `strtobool`_ function in the distutils.util module
+is the only candidate that passes our test.
+
+.. _`strtobool`: https://docs.python.org/3/distutils/apiref.html#distutils.util.strtobool
+
+----
+
+Our first search 4/4
+--------------------
+
+``distutils.util:strtobool``
+Convert a string representation of truth to true (1) or false (0).
+
+.. code:: python
+
+    def strtobool (val):
+        val = val.lower()
+        if val in ('y', 'yes', 't', 'true', 'on', '1'):
+            return 1
+        elif val in ('n', 'no', 'f', 'false', 'off', '0'):
+            return 0
+        else:
+            raise ValueError("invalid truth value %r" % (val,))
+
+
+https://github.com/python/cpython/blob/3.5/Lib/distutils/util.py#L304
 
 ----
 

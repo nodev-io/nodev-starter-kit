@@ -33,33 +33,68 @@ We tried hard to find a simpler setup, but once all the nitty-gritty details are
 we choose docker as the best trade-off between safety, reproducibility and easiness of use.
 
 
-Local docker setup
-------------------
+Install docker-engine and docker
+--------------------------------
 
-Fill the requirements.txt file.
+In order to run pytest-nodev you need to access a docker-engine server via the docker client,
+if you don't have Docker already setup
+you need to follow the official installation instructions for your platform:
 
-Build the docker image once with::
+- `Docker for Linux <https://docs.docker.com/engine/installation/linux/>`_
+- `Docker for MacOS <https://docs.docker.com/docker-for-mac/>`_
+- `Docker for Windows <https://docs.docker.com/docker-for-windows/>`_
 
-    docker build -t nodev .
+Only on Ubuntu 16.04 you can use the script we provide::
 
-Run the tests with::
+    $ bash ./docker-engine-setup.sh
 
-    docker run --rm -it -v `pwd`:/src nodev [PYTEST_OPTIONS]
+And test your setup with::
 
-Remote docker setup
--------------------
+    $ sudo docker info
 
-Install the docker client::
 
-    apt install docker.io
+Create the nodev image
+----------------------
 
-Set the DOCKER_HOST environment variable::
+The *nodev* docker image will be your search engine,
+it needs to be created once and updated every time you want to
+change the packages installed in the search engine environment.
 
-    export DOCKER_HOST="tcp://xxx.xxx.xxx.xxx:4243"
+With an editor fill the requirements.txt file with the packages to be installed in the search engine.
 
-Run the tests with::
+Build the docker image with::
 
-    python docker-nodev.py [PYTEST_OPTIONS]
+    $ sudo docker build -t nodev .
+
+
+Execute a search
+----------------
+
+Run the search engine container on a local docker-engine server, e.g. with::
+
+    $ sudo docker run --rm -it -v `pwd`:/src nodev --candidates-from-stdlib tests/test_parse_bool.py
+
+Or alternatively after having set the ``DOCKER_HOST`` environment variable, e.g. with::
+
+    $ export DOCKER_HOST='tcp://127.0.0.1:4243'  # change '127.0.0.1:4243' with the IP address and port
+                                                 # of your remote docker-engine host
+
+you can run the search engine container on a remote docker-engine server, e.g. with::
+
+    $ python docker-nodev.py --candidates-from-stdlib tests/test_parse_bool.py
+    ======================= test session starts ==========================
+    platform darwin -- Python 3.5.1, pytest-2.9.2, py-1.4.31, pluggy-0.3.1
+    rootdir: /tmp, inifile: setup.cfg
+    plugins: nodev-1.0.0, timeout-1.0.0
+    collected 4000 items
+
+    test_parse_bool.py xxxxxxxxxxxx[...]xxxxxxxxXxxxxxxxx[...]xxxxxxxxxxxx
+
+    ====================== pytest_nodev: 1 passed ========================
+
+    test_parse_bool.py::test_parse_bool[distutils.util:strtobool] PASSED
+
+    === 3999 xfailed, 1 xpassed, 260 pytest-warnings in 75.38 seconds ====
 
 Project resources
 -----------------
