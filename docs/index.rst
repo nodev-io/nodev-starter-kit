@@ -1,7 +1,7 @@
 
-================
-nodev staret kit
-================
+=================
+nodev starter kit
+=================
 
 :Version: |release|
 :Date: |today|
