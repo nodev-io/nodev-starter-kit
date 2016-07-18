@@ -145,8 +145,7 @@ Bibliography 1/2
   917--918, **2007**, ACM, http://dx.doi.org/10.1145/1297846.1297944
 
 - "Code conjurer: Pulling reusable software out of thin air", O. Hummel *et al*,
-  IEEE Software, (25) 5 45-52, **2008**, IEEE, http://dx.doi.org/10.1109/MS.2008.110 ---
-  `PDF <http://cosc612.googlecode.com/svn/Research%20Paper/Code%20Conjurer.pdf>`__
+  IEEE Software, (25) 5 45-52, **2008**, IEEE, http://dx.doi.org/10.1109/MS.2008.110
 
 ----
 
