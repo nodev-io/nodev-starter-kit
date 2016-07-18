@@ -593,7 +593,7 @@ Unit tests validation
 
 An independent use case for test-driven code search is unit tests validation.
 
-Adding ``pytest.mark.candidate`` makers does not affect your tests until you
+Adding ``pytest.mark.candidate`` markers does not affect your tests until you
 explicitely activate *pytest-nodev* it with a ``--candidates-from-*`` option,
 so you can just add the markers to your regular tests.
 
