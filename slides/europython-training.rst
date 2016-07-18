@@ -436,7 +436,7 @@ as a candidate implementation for the target feature.
 Test-driven code reuse 2/2
 --------------------------
 
-- if nothing passes the tests the developer need to implement the feature and TDR reduces to TDD
+- if nothing passes the tests the developer needs to implement the feature and TDR reduces to TDD
 - if any code passes the tests the developer can:
 
   - **import**: accept code as a dependency and use the class / function directly
