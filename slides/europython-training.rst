@@ -87,7 +87,7 @@ Motivation 2/4
 
 Every piece of functionality in a software project
 requires code that lies somewhere in the wide reusability spectrum that goes
-form extremely custom and strongly tied to the specific implementation
+from extremely custom and strongly tied to the specific implementation
 to completely generic and highly reusable.
 
 On the *custom* side of the spectrum there is all the code that defines the
