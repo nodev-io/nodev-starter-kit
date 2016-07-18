@@ -39,7 +39,7 @@ Training outline 1/2
 --------------------
 
 - Present the *test-driven code search* concepts
-- Present **pytest-nodev** and install **nodev-stater-kit**
+- Present **pytest-nodev** and install **nodev-starter-kit**
 - Make our first *test-driven code search*
 - Practice *pytest-nodev* search options
 - Present the *test-driven reuse* development strategy
