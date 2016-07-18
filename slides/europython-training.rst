@@ -101,7 +101,7 @@ Motivation 3/4
 
 On the other hand seasoned software developers are trained to spot
 pieces of functionality that lie far enough on the *generic* side of the range
-that with high probability are already implemented in a **librariy** or a **framework**
+that with high probability are already implemented in a **library** or a **framework**
 and that are documented well enough to be discovered with a
 **keyword-based search**, e.g. on StackOverflow and Google.
 
