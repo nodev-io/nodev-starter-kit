@@ -87,7 +87,7 @@ Motivation 2/4
 
 Every piece of functionality in a software project
 requires code that lies somewhere in the wide reusability spectrum that goes
-form extremely custom and strongly tied to the specific implementation
+from extremely custom and strongly tied to the specific implementation
 to completely generic and highly reusable.
 
 On the *custom* side of the spectrum there is all the code that defines the
@@ -436,7 +436,7 @@ as a candidate implementation for the target feature.
 Test-driven code reuse 2/2
 --------------------------
 
-- if nothing passes the tests the developer need to implement the feature and TDR reduces to TDD
+- if nothing passes the tests the developer needs to implement the feature and TDR reduces to TDD
 - if any code passes the tests the developer can:
 
   - **import**: accept code as a dependency and use the class / function directly
@@ -593,7 +593,7 @@ Unit tests validation
 
 An independent use case for test-driven code search is unit tests validation.
 
-Adding ``pytest.mark.candidate`` makers does not affect your tests until you
+Adding ``pytest.mark.candidate`` markers does not affect your tests until you
 explicitely activate *pytest-nodev* it with a ``--candidates-from-*`` option,
 so you can just add the markers to your regular tests.
 
