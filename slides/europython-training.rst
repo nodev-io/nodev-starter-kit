@@ -261,14 +261,14 @@ Setup the docker client
 
 Set the ``DOCKER_HOST`` environment variable to the training docker-engine server on AWS::
 
-    $ export DOCKER_HOST="tcp://23.23.23.23:4243"
+    $ export DOCKER_HOST="tcp://52.59.61.208:4243"
 
 Test with::
 
     $ docker images
-    REPOSITORY  TAG     IMAGE ID      CREATED         SIZE
-    nodev       latest  26ee171c2744  18 minutes ago  802.4 MB
-    [...]
+    REPOSITORY  TAG     IMAGE ID      CREATED     SIZE
+    nodev       latest  26ee171c2744  2 days ago  802.4 MB
+    python      3       7fd24fb1b492  9 days ago  686 MB
 
 ----
 
@@ -482,11 +482,6 @@ from the following ISO 8601 strings:
 
 ----
 
-Coffee break
-------------
-
-----
-
 Feature specification tests
 ---------------------------
 
@@ -511,14 +506,101 @@ Assert the desired behaviour
 
 ----
 
-Keep clear from implementation details
---------------------------------------
+Keep clear of implementation details
+------------------------------------
 
 - target the simpler implementation
 - abuse the insanely powerful ``in`` operator
 - abuse python insanely powerful introspection
 - exploit coercion rules
 - use and write helpers
+
+----
+
+nodev.specs
+-----------
+
+**nodev.specs** helps you write robust tests that describe the abstract behaviour of your code
+leaving many implementation details out of your tests.
+
+Install::
+
+    $ pip install nodev.specs
+
+Development::
+
+    https://github.com/nodev-io/nodev.specs
+
+----
+
+Using nodev.specs
+-----------------
+
+The general idea is best explained with an example,
+let's write a specification test for the following function ``skip_comments`` that
+returns the non-comment part of every line in the input file:
+
+.. code-block:: python
+
+    def skip_comments(stream):
+        return [line.partition('#')[0] for line in stream]
+
+The simplest unit test may look like the following:
+
+.. code-block:: python
+
+    def test_skip_comments_will_break_soon():
+        assert skip_comments(['# comment']) == ['']
+        assert skip_comments(['value # comment']) == ['value ']
+        assert skip_comments(['value 1', '', 'value 2']) == ['value 1', '', 'value 2']
+
+----
+
+Using nodev.specs
+-----------------
+
+Such a unit test is much more tied to current ``skip_comments`` implementation than it needs to be
+and the test will need update every time a tiny feature is added,
+like turning the function into a generator::
+
+    def skip_comments(stream):
+        for line in stream:
+            yield line.partition('#')[0]
+
+[... to the console!]
+
+----
+
+Using nodev.specs
+-----------------
+
+Much more robust test with nodev.specs:
+
+.. code-block:: python
+
+    from nodev.specs.generic import FlatContainer
+
+    def test_skip_comments_will_not_break():
+        assert '' in FlatContainer(skip_comments(['# comment']))
+        assert 'value ' in FlatContainer(skip_comments(['value # comment']))
+        assert 'value 1' in FlatContainer(skip_comments(['value 1', '', 'value 2']))
+        assert 'value 2' in FlatContainer(skip_comments(['value 1', '', 'value 2']))
+
+----
+
+Unit tests validation
+---------------------
+
+An independent use case for test-driven code search is unit tests validation.
+
+Adding ``pytest.mark.candidate`` makers does not affect your tests until you
+explicitely activate *pytest-nodev* it with a ``--candidates-from-*`` option,
+so you can just add the markers to your regular tests.
+
+Once in a while you can make a search for your tests with ``--candidates-from-all`` and
+if a test passes with an unexpected object there are two possibilities,
+either the test is not strict enough and allows for false positives and needs to be updated,
+or the **PASSED** is actually a function you could use instead of your implementation.
 
 ----
 
