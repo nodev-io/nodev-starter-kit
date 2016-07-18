@@ -1,7 +1,7 @@
 :title: Test-driven code search and the art of writing implementation-agnostic tests
 :data-transition-duration: 500
 :author: Alessandro Amici
-:description: The Hovercraft! tutorial.
+:description: No-dev tutorial
 :css: tutorial.css
 
 .. title:: Test-driven code search and the art of writing implementation-agnostic tests
