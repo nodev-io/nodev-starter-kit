@@ -13,7 +13,7 @@
 FROM python:3
 
 # setup workdir
-COPY ./ /src
+COPY ./requirements.txt /src/
 WORKDIR /src
 
 # setup the python and pytest environments
