@@ -146,6 +146,167 @@ More independent from implementation with *nodev.specs*:
 
 ----
 
-Search ``parse_datetime``
--------------------------
+:id: search-skip-comments
 
+Search ``skip_comments``
+------------------------
+
+.. code-block:: python
+
+    import io
+    import pytest
+    from nodev.specs.generic import FlatContainer
+
+    @pytest.mark.parametrize('text2stream', [
+        lambda x: x,
+        lambda x: x.splitlines(True),
+        lambda x: enumerate(x.splitlines(True), 1),
+        lambda x: io.StringIO(x),
+    ])
+    def test_skip_comments(candidate, text2stream):
+        skip_comments = candidate
+
+        text = 'value = 1 # comment\n'
+        assert 'value = 1' in FlatContainer(skip_comments(text2stream(text)))
+        assert 'comment' not in FlatContainer(skip_comments(text2stream(text)))
+
+----
+
+Search results and refinement strategies
+----------------------------------------
+
+- **only relevant results**: your *search query* is just perfect
+- **no result at all**: your *search query* may be too strict
+
+  - try relaxing your *specification tests*,
+    e.g. drop corner cases or try to focus on a reduced / partial feature
+  - try collecting more candidates from more code
+
+- **no relevant result**: your *feature specification tests* is too weak
+
+  - harden your *specification tests*, e.g. add more normal cases, add more corner cases
+
+Defeat is when you only seem to go from *no result at all* to *no relevant result* and back.
+
+----
+
+Bibliography
+------------
+
+- "CodeGenie: a tool for test-driven source code search", O.A. Lazzarini Lemos *et al*,
+  Companion to the 22nd ACM SIGPLAN conference on Object-oriented programming systems and applications companion,
+  917--918, **2007**, ACM, http://dx.doi.org/10.1145/1297846.1297944
+- "Code conjurer: Pulling reusable software out of thin air", O. Hummel *et al*,
+  IEEE Software, (25) 5 45-52, **2008**, IEEE, http://dx.doi.org/10.1109/MS.2008.110
+- "Finding Source Code on the Web for Remix and Reuse", S.E. Sim *et al*, 251, **2013** ---
+  `PDF <http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.308.2645&rep=rep1&type=pdf>`__
+- "Test-Driven Reuse: Improving the Selection of Semantically Relevant Code", M. Nurolahzade,
+  Ph.D. thesis, **2014**, UNIVERSITY OF CALGARY ---
+  `PDF <http://lsmr.org/docs/nurolahzade_phd_2014.pdf>`__
+
+----
+
+Test-driven code reuse
+----------------------
+
+*Test-driven reuse* (TDR) is an extension of the *test-driven development* (TDD)
+development practice.
+
+Developing a new feature in TDR starts with the developer writing the tests
+that will validate the correct implementation of the desired functionality.
+
+Before writing any functional code the tests are used to search for a siutable
+implementation.
+
+Any code passing the tests is presented to the developer
+as a candidate implementation for the target feature.
+
+----
+
+Test-driven code reuse
+----------------------
+
+- when no suitable code is found
+  the developer needs to implement the feature and TDR reduces to TDD
+- when suitable code is found the developer can:
+
+  - **import**: accept code as a dependency and use the class / function directly
+  - **fork**: copy the code and the related tests into their project
+  - **study**: use the code and the related tests as guidelines for their implementation,
+    in particular identifyng corner cases and optimizations
+
+----
+
+Unit tests validation
+---------------------
+
+An independent use case for test-driven code search is unit tests validation.
+
+Adding ``pytest.mark.candidate`` markers does not affect your tests until you
+explicitely activate *pytest-nodev* it with a ``--candidates-from-*`` option,
+so you can just add the markers to your regular tests.
+
+Once in a while you can make a search for your tests with ``--candidates-from-all`` and
+if a test passes with an unexpected object there are two possibilities,
+either the test is not strict enough and allows for false positives and needs to be updated,
+or the **PASSED** is actually a function you could use instead of your implementation.
+
+----
+
+Limitations and future work...
+------------------------------
+
+- Improve performance!
+- Extend implementation independence
+
+  - Permutate arguments, handle keyword arguments...
+
+- Improve performance!
+- Extend available code
+
+  - Collect code from all repos, extract snippets...
+
+- Improve performance!
+- ...
+
+----
+
+... future work
+---------------
+
+- **Setup a web search engine!**
+
+Trying it! Register for the beta test by sending an email to:
+
+    .. code-block::
+
+        nodev-test@bopen.eu
+
+----
+
+Conclusions
+-----------
+
+*Test-driven code search* finds code, but not any kind of code.
+
+It tends to find very nice code, that is
+code that provides features without polluting them with useless implementation details.
+
+As long as you learn how to write good *specification tests*.
+
+That is tests that specify a feature without insisting on useless implementation details.
+
+----
+
+Thanks!
+-------
+
+Alessandro Amici <a.amici@bopen.eu> - @alexamici
+
+B-Open Solutions - http://bopen.eu
+
+Register for beta test to:
+
+    .. code-block::
+
+        nodev-test@bopen.eu

@@ -6,13 +6,14 @@ body {
     font-family: Oxygen, sans-serif;
 }
 
-#first-search-3.step {
+#my-first-result.step,
+#search-skip-comments.step {
     width: 1024px;
 }
 
 p {
     font-weight: normal;
-    margin-bottom: 0.3em;
+    margin-bottom: 0.4em;
     margin-top: 0.3em;
     text-align: left;
     line-height: 140%;
@@ -41,7 +42,7 @@ ul {
 li {
     font-family: Oxygen;
     font-weight: normal;
-    margin-bottom: 0.3em;
+    margin-bottom: 0.4em;
     margin-top: 0.3em;
     padding-left: 0.3em;
     text-align: left;
