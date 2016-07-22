@@ -1,54 +1,23 @@
 
-# import pytest
+import io
+
+import pytest
 
 from nodev.specs.generic import FlatContainer
 
-#
-# possible evolution of a ``skip_comments`` function
-#
-def skip_comments_v0(stream):
-    return [line.partition('#')[0] for line in stream]
 
+@pytest.mark.parametrize('text2stream', [
+    lambda x: x,
+    lambda x: x.splitlines(True),
+    lambda x: enumerate(x.splitlines(True), 1),
+    lambda x: io.StringIO(x),
+])
+def test_skip_comments(candidate, text2stream):
+    skip_comments = candidate
 
-def skip_comments_v1(stream):
-    for line in stream:
-        yield line.partition('#')[0]
+    input_text = 'value = 1 # comment\n'
+    assert 'value = 1' in FlatContainer(skip_comments(text2stream(input_text)))
+    assert 'comment' not in FlatContainer(skip_comments(text2stream(input_text)))
 
-
-def skip_comments_v2(stream):
-    for index, line in enumerate(stream):
-        value = line.partition('#')[0]
-        if line:
-            yield index, value
-
-
-def skip_comments_v3(stream):
-    for index, line in enumerate(stream):
-        value, sep, comment = line.partition('#')
-        if line:
-            yield index, value, sep + comment
-
-
-skip_comments = skip_comments_v0
-
-
-def test_skip_comments_will_break_soon():
-    assert skip_comments(['']) == ['']
-    assert skip_comments(['# comment']) == ['']
-    assert skip_comments(['value # comment']) == ['value ']
-    assert skip_comments(['value 1', '', 'value 2']) == ['value 1', '', 'value 2']
-
-
-def test_skip_comments_will_break_eventually():
-    assert '' in skip_comments(['# comment'])
-    assert 'value ' in skip_comments(['value # comment'])
-    assert 'value 1' in skip_comments(['value 1', '', 'value 2'])
-    assert 'value 2' in skip_comments(['value 1', '', 'value 2'])
-
-
-# @pytest.mark.candidate('skip_comments')
-def test_skip_comments_will_not_break():
-    assert '' in FlatContainer(skip_comments(['# comment']))
-    assert 'value ' in FlatContainer(skip_comments(['value # comment']))
-    assert 'value 1' in FlatContainer(skip_comments(['value 1', '', 'value 2']))
-    assert 'value 2' in FlatContainer(skip_comments(['value 1', '', 'value 2']))
+    input_text = '# comment\n'
+    assert 'comment' not in FlatContainer(skip_comments(text2stream(input_text)))
