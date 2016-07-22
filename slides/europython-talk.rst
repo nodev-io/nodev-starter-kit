@@ -305,7 +305,14 @@ Alessandro Amici <a.amici@bopen.eu> - @alexamici
 
 B-Open Solutions - http://bopen.eu
 
-Register for beta test to:
+    .. code-block::
+
+        http://pytest-nodev.readthedocs.io
+
+        http://github.com/nodev-io/nodev-starter-kit
+
+
+Register for web search beta test:
 
     .. code-block::
 
