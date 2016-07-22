@@ -26,6 +26,10 @@ Test-driven code search
 - **Search results**: the list of the functions and classes that **PASSED** the
   *specification test*.
 
+    .. code-block::
+
+        http://pytest-nodev.readthedocs.io
+
 ----
 
 The ``candidate`` fixture
@@ -59,56 +63,89 @@ Let's write the *specification test* function as:
 
 ----
 
-Due to its nature the approach is better suited for discovering smaller functions
-with a generic signature.
+:id: my-first-result
 
+My first result
+---------------
 
+.. code-block:: console
 
-=============================================================================== pytest_nodev: 21 passed ===============================================================================
+    $ py.test --candidates-from-all tests/test_which.py
+    ====================== test session starts ========================
+    platform linux -- Python 3.5.2, pytest-2.9.2, [...]
+    rootdir: /src/tests, inifile:
+    plugins: timeout-1.0.0, nodev-1.0.1
+    collected 6007 items
 
-tests/test_parse_datetime.py::test_parse_datetime_naive[DateTime.DateTime:DateTime] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_naive[arrow.api:get] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_naive[astropy.time.core:Time] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_naive[botocore.utils:parse_timestamp] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_naive[botocore.utils:parse_to_aware_datetime] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_naive[dateparser:parse] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_naive[dateutil.parser:parse] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_naive[delorean.interface:parse] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_naive[fiona.rfc3339:parse_datetime] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_naive[jupyter_client.jsonutil:extract_dates] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_naive[jupyter_client.jsonutil:parse_date] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_naive[logbook.helpers:parse_iso8601] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_naive[pandas.tseries.tools:parse_time_string] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_naive[pandas.tslib:parse_datetime_string] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_naive[pandas.tslib:parse_datetime_string_with_reso] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_naive[yaml:load] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_naive[yaml:safe_load] PASSED
+    tests/test_which.py xxx[...]xxxXxxx[...]xxxXxxx[...]xxxXxxx[...]xxx
 
-========================================================== 2975 xfailed, 21 xpassed, 1673 pytest-warnings in 110.80 seconds ===========================================================
+    =================== pytest_nodev: 3 passed ========================
 
-=============================================================================== pytest_nodev: 15 passed ===============================================================================
+    test_which.py::test_which[distutils.spawn:find_executable] PASSED
+    test_which.py::test_which[pexpect.utils:which] PASSED
+    test_which.py::test_which[shutil:which] PASSED
 
-tests/test_parse_datetime.py::test_parse_datetime_timezone[DateTime.DateTime:DateTime] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_timezone[arrow.api:get] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_timezone[botocore.utils:parse_timestamp] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_timezone[botocore.utils:parse_to_aware_datetime] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_timezone[dateutil.parser:parse] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_timezone[delorean.interface:parse] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_timezone[fiona.rfc3339:parse_datetime] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_timezone[jupyter_client.jsonutil:extract_dates] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_timezone[jupyter_client.jsonutil:parse_date] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_timezone[logbook.helpers:parse_iso8601] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_timezone[pandas.tseries.tools:parse_time_string] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_timezone[pandas.tslib:parse_datetime_string] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_timezone[pandas.tslib:parse_datetime_string_with_reso] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_timezone[yaml:load] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_timezone[yaml:safe_load] PASSED
+    == 6004 xfailed, 3 xpassed, 420 pytest-warnings in 109.88 seconds =
+    $
 
-========================================================== 2943 xfailed, 15 xpassed, 1672 pytest-warnings in 105.28 seconds ===========================================================
+----
 
-=============================================================================== pytest_nodev: 2 passed ================================================================================
+The art of writing *specification tests*
+----------------------------------------
 
-tests/test_parse_datetime.py::test_parse_datetime_leap_seconds[astropy.time.core:Time] PASSED
-tests/test_parse_datetime.py::test_parse_datetime_leap_seconds[fiona.rfc3339:parse_datetime] PASSED
+Good *specification tests* strive to assert features and behaviours in
+an implementation-agnostic way by (ab)using:
 
-=========================================================== 2956 xfailed, 2 xpassed, 1671 pytest-warnings in 102.16 seconds ===========================================================
+- Python dynamic nature, e.g. duck typing, the ``in`` operator, the ``==`` operator, etc.
+- pytest flexibility, e.g. parametrization.
+- specific helper packages, e.g. **nodev.specs**.
+
+    .. code-block::
+
+        http://github.com/nodev-io/nodev.specs
+
+----
+
+Search ``rfc3986_parse``
+------------------------
+
+Let's search a function to parse a RFC 3986 URI into tokens.
+
+.. code-block:: python
+
+    def test_rfc3986_parse_naive(candidate):
+        rfc3986_parse = candidate
+
+        uri = 'postgresql://user@example.com:80/path/id?q=value'
+        tokens = rfc3986_parse(uri)
+
+        # the ``in`` operator is broken for ``str``
+        assert not isinstance(tokens, str)
+        assert 'postgresql' in tokens
+        assert '/path/id' in tokens
+
+----
+
+Search ``rfc3986_parse``
+------------------------
+
+More independent from implementation with *nodev.specs*:
+
+.. code-block:: python
+
+    from nodev.specs.generic import FlatContainer
+
+    def test_rfc3986_parse_nodev(candidate):
+        rfc3986_parse = candidate
+
+        uri = 'postgresql://user@example.com:80/path/id?q=value'
+        tokens = FlatContainer(rfc3986_parse(uri))
+
+        assert 'postgresql' in tokens
+        assert '/path/id' in tokens
+
+----
+
+Search ``parse_datetime``
+-------------------------
+
