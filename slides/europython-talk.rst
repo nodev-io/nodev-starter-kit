@@ -243,11 +243,11 @@ Unit tests validation
 An independent use case for test-driven code search is unit tests validation.
 
 Adding ``pytest.mark.candidate`` markers does not affect your tests until you
-explicitely activate *pytest-nodev* it with a ``--candidates-from-*`` option,
+explicitly activate *pytest-nodev* it with a ``--candidates-from-*`` option,
 so you can just add the markers to your regular tests.
 
-Once in a while you can make a search for your tests with ``--candidates-from-all`` and
-if a test passes with an unexpected object there are two possibilities,
+Once in a while you can make a search with your test as a query and
+if the test passes with an unexpected object there are two possibilities,
 either the test is not strict enough and allows for false positives and needs to be updated,
 or the **PASSED** is actually a function you could use instead of your implementation.
 
