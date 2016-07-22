@@ -10,5 +10,5 @@ humanfriendly
 click
 pexpect
 moment
-DateTime
 delorean
+rfc3986

@@ -12,12 +12,12 @@ DOCKER_SIMPLE_CMD_IN = 'docker {} {container_id}'
 
 def nodev(argv=()):
     container_id = subprocess.check_output(DOCKER_CREATE_IN.format(' '.join(argv[1:])), shell=True).decode('utf-8').strip()
-    print('created container: {container_id}'.format(**locals()))
+    print('Created container.')
     try:
         subprocess.check_call('docker cp . {container_id}:/src '.format(**locals()), shell=True)
         subprocess.check_call('docker start -ai {container_id}'.format(**locals()), shell=True)
     finally:
-        print('removing container: {container_id}'.format(**locals()))
+        print('Removing container.')
         subprocess.check_output(DOCKER_SIMPLE_CMD_IN.format('rm -f', **locals()), shell=True)
 
 
