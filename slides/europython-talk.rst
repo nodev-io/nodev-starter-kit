@@ -233,7 +233,7 @@ Test-driven code reuse
   - **import**: accept code as a dependency and use the class / function directly
   - **fork**: copy the code and the related tests into their project
   - **study**: use the code and the related tests as guidelines for their implementation,
-    in particular identifyng corner cases and optimizations
+    in particular identifying corner cases and optimizations
 
 ----
 
