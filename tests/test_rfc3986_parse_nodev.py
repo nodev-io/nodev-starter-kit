@@ -1,7 +1,6 @@
 
 from nodev.specs.generic import FlatContainer
 
-
 def test_rfc3986_parse_nodev(candidate):
     rfc3986_parse = candidate
 

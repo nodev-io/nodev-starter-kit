@@ -12,4 +12,4 @@ pexpect
 moment
 delorean
 rfc3986
-astropy
+# astropy
