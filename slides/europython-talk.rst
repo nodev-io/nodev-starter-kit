@@ -215,7 +215,7 @@ development practice.
 Developing a new feature in TDR starts with the developer writing the tests
 that will validate the correct implementation of the desired functionality.
 
-Before writing any functional code the tests are used to search for a siutable
+Before writing any functional code the tests are used to search for a suitable
 implementation.
 
 Any code passing the tests is presented to the developer
